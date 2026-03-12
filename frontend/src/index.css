@@ -42,40 +42,78 @@ body {
 /* ── Animated Grid Background ────────────────────────────── */
 .hero-bg {
   position: relative;
-  overflow: hidden;
+  background-color: var(--bg-primary);
 }
 
 .hero-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridMove 20s linear infinite;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1.5px, transparent 1.5px);
+  background-size: 80px 80px;
+  animation: gridMove 25s linear infinite;
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, black 20%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, black 20%, transparent 95%);
 }
 
 .hero-bg::after {
   content: '';
   position: absolute;
   inset: 0;
+  background: 
+    radial-gradient(circle at 20% 40%, rgba(59, 130, 246, 0.1), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(167, 139, 250, 0.08), transparent 40%);
+  animation: bgPulse 10s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.landing-shell {
   background:
-    radial-gradient(ellipse 600px 300px at 30% 50%, rgba(59, 130, 246, 0.08), transparent),
-    radial-gradient(ellipse 500px 250px at 70% 40%, rgba(34, 211, 238, 0.05), transparent);
-  animation: glowPulse 8s ease-in-out infinite alternate;
+    radial-gradient(circle at 15% 12%, rgba(59, 130, 246, 0.08), transparent 30%),
+    radial-gradient(circle at 88% 8%, rgba(34, 211, 238, 0.06), transparent 28%),
+    var(--bg-primary);
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+.hero-orb-blue {
+  width: 260px;
+  height: 260px;
+  top: 10%;
+  right: 8%;
+  background: rgba(59, 130, 246, 0.22);
+}
+
+.hero-orb-cyan {
+  width: 220px;
+  height: 220px;
+  bottom: 8%;
+  left: 10%;
+  background: rgba(34, 211, 238, 0.14);
+  animation-delay: -3s;
 }
 
 @keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(60px, 60px); }
+  0% { transform: scale(1.1) translate(0, 0); }
+  100% { transform: scale(1.1) translate(80px, 80px); }
 }
 
-@keyframes glowPulse {
-  0% { opacity: 0.6; }
-  100% { opacity: 1; }
+@keyframes bgPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-14px) translateX(8px); }
 }
 
 /* Graph Line Animation */
@@ -124,6 +162,47 @@ body {
   0% { stroke-dashoffset: 1000; }
   50% { stroke-dashoffset: 0; }
   100% { stroke-dashoffset: -1000; }
+}
+
+/* ── Glassmorphism ─────────────────────────────────────────── */
+.glass {
+  background: rgba(17, 28, 50, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-nav {
+  background: rgba(7, 11, 22, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-card {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.feature-card {
+  will-change: transform;
+}
+
+.feature-card:hover {
+  box-shadow: 0 14px 30px rgba(5, 10, 24, 0.45);
+}
+
+.workflow-card {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.workflow-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.28);
 }
 
 /* ── Card Styles ───────────────────────────────────────────── */
@@ -200,7 +279,6 @@ body {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  width: 100%;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -370,9 +448,44 @@ body {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
+.reveal-up {
+  opacity: 0;
+  animation: revealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.reveal-delay-1 { animation-delay: 120ms; }
+.reveal-delay-2 { animation-delay: 220ms; }
+.reveal-delay-3 { animation-delay: 320ms; }
+.reveal-delay-4 { animation-delay: 420ms; }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb,
+  .reveal-up,
+  .graph-line path,
+  .hero-bg::before,
+  .hero-bg::after {
+    animation: none !important;
+  }
+
+  .reveal-up {
+    opacity: 1;
+  }
 }
 
 /* -- Word Break for JSON Display ------------------------------- */

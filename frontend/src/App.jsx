@@ -3,6 +3,7 @@ import LandingPage from './pages/LandingPage'
 import AppLayout from './pages/AppLayout'
 import DocumentAnalyzer from './components/DocumentAnalyzer'
 import CreditEngine from './components/CreditEngine'
+import CompanyRiskAnalyzer from './components/CompanyRiskAnalyzer'
 import './index.css'
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/app" element={<AppLayout />}>
           <Route index element={<CreditEngine />} />
           <Route path="document" element={<DocumentAnalyzer />} />
+          <Route path="company-risk" element={<CompanyRiskAnalyzer />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
